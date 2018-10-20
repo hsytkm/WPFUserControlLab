@@ -39,7 +39,7 @@ namespace AddableList.ViewModels
             {
                 await Task.Run(() =>
                 {
-                    if (CountriesSource.Count > 1)
+                    if (CountriesSource.Count > 0)
                     {
                         CountriesSource.RemoveAt(CountriesSource.Count - 1);
                     }
