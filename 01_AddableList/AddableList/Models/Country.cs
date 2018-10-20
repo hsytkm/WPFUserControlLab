@@ -1,20 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System;
+using System.Linq;
 
 namespace AddableList.Models
 {
     public class Country
     {
-        public static IReadOnlyCollection<Country> Candidates = new ReadOnlyCollection<Country>(
-            new List<Country>()
-            {
-                new Country("Japan", "日"),
-                new Country("America", "米"),
-                new Country("England", "英"),
-                new Country("China", "中"),
-                new Country("India", "印"),
-            });
+        public static IReadOnlyDictionary<string, string> AliasMap =
+            new ReadOnlyDictionary<string, string>(
+                new Dictionary<string, string>()
+                {
+                    ["Japan"] = "日",
+                    ["America"] = "米",
+                    ["England"] = "英",
+                    ["China"] = "中",
+                    ["India"] = "印",
+                });
 
+        public static IReadOnlyCollection<Country> Candidates =
+            AliasMap.Select(x => new Country(x.Key)).ToList();
 
         public string Name { get; }
 
@@ -22,10 +27,18 @@ namespace AddableList.Models
 
         //public IReadOnlyCollection<string> Cities;
 
-        public Country(string name, string alias)
+        public Country(string name)
         {
             Name = name;
-            Alias = alias;
+
+            if (AliasMap.TryGetValue(name, out string alias))
+            {
+                Alias = alias;
+            }
+            else
+            {
+                Alias = "？";
+            }
         }
 
     }
