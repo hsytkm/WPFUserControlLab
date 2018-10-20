@@ -2,12 +2,39 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:m="clr-namespace:AddableList.Models"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}" Height="300" Width="400">
-    <Grid>
-        <TextBlock Text="{Binding Title}" />
-        <!--
-        <ContentControl prism:RegionManager.RegionName="ContentRegion" />
-        -->
-    </Grid>
+    <StackPanel>
+        <Button Content="Add"
+                Command="{Binding AddCommand, Mode=OneTime}" />
+
+        <Button Content="Del"
+                Command="{Binding DelCommand, Mode=OneTime}" />
+
+        <ListBox ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                 ItemsSource="{Binding Countries, Mode=OneTime}" >
+
+            <ListBox.Resources>
+                <!-- ViewがModelクラス見てるのイマイチやけど、
+                     ViewModelで定義したクラスにメンバをコピる以外の実装が分からず、
+                     それをやってもあまり意味なさげなので、直接Model見ちゃった…
+                -->
+                <DataTemplate DataType="{x:Type m:Country}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="40" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0"
+                                   Text="{Binding Name, Mode=OneTime}" />
+                        <TextBlock Grid.Column="1"
+                                   Text="{Binding Alias, Mode=OneTime}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.Resources>
+
+        </ListBox>
+
+    </StackPanel>
 </Window>
