@@ -10,15 +10,15 @@ namespace AddableList.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        private string _title = "WPFUserControlLab AddableList";
+        private string _title = "AddableList";
         public string Title
         {
             get { return _title; }
             set { SetProperty(ref _title, value); }
         }
 
-        private ObservableCollection<Country> CountriesSource { get; } = new ObservableCollection<Country>();
-        public ReadOnlyReactiveCollection<Country> Countries { get; }
+        private ObservableCollection<CountryViewModel> CountriesSource { get; } = new ObservableCollection<CountryViewModel>();
+        public ReadOnlyReactiveCollection<CountryViewModel> Countries { get; }
 
         public AsyncReactiveCommand AddCommand { get; } = new AsyncReactiveCommand();
         public AsyncReactiveCommand DelCommand { get; } = new AsyncReactiveCommand();
@@ -31,7 +31,7 @@ namespace AddableList.ViewModels
             {
                 await Task.Run(() =>
                 {
-                    CountriesSource.Add(new Country("Japan", "日"));
+                    CountriesSource.Add(new CountryViewModel());
                 });
             });
 
