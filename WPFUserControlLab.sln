@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01_AddableList", "01_AddableList", "{09BAA0E5-5487-4927-AEBE-6E3ED5F10F99}"
+	ProjectSection(SolutionItems) = preProject
+		01_AddableList\README.md = 01_AddableList\README.md
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddableList", "01_AddableList\AddableList\AddableList.csproj", "{0EDFA557-365E-49A2-970E-081BEFC456D4}"
 EndProject
