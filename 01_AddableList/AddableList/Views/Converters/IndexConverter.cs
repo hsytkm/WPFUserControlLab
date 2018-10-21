@@ -11,15 +11,10 @@ namespace AddableList.Views.Converters
     {
         public object Convert(object value, Type TargetType, object parameter, CultureInfo culture)
         {
-#if false   //Original
             var item = (ListViewItem)value;
             var listView = ItemsControl.ItemsControlFromItemContainer(item) as ListView;
             int index = listView.ItemContainerGenerator.IndexFromContainer(item);
-            return index.ToString();
-#else
-            var listView = value as ListView;
-            return listView?.ItemContainerGenerator.Items.Count;
-#endif
+            return (index + 1).ToString();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

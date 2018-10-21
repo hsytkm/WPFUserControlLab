@@ -14,7 +14,7 @@ namespace AddableList.ViewModels
         public string Title
         {
             get { return _title; }
-            set { SetProperty(ref _title, value); }
+            //set { SetProperty(ref _title, value); }
         }
 
         private ObservableCollection<CountryViewModel> CountriesSource { get; } = new ObservableCollection<CountryViewModel>();

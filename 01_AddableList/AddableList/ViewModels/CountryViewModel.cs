@@ -7,7 +7,7 @@ namespace AddableList.ViewModels
 {
     public class CountryViewModel
     {
-        public IReadOnlyCollection<Country> Countries { get; } = Country.Candidates;
+        public IReadOnlyCollection<Country> CountryCandidates { get; } = Country.Candidates;
 
         public CountryViewModel()
         {

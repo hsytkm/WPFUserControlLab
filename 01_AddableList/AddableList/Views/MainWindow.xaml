@@ -5,9 +5,9 @@
         xmlns:vc="clr-namespace:AddableList.Views.Converters"
         xmlns:vm="clr-namespace:AddableList.ViewModels"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="{Binding Title}"
-        Height="200" Width="260">
-    
+        Title="{Binding Title, Mode=OneTime}"
+        Height="200" Width="300">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -29,47 +29,53 @@
         <ListView Grid.Row="1"
                   ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                   ItemsSource="{Binding Countries, Mode=OneTime}" >
-
             <ListView.Resources>
                 <vc:IndexConverter x:Key="IndexConverter"/>
-
-                <DataTemplate DataType="{x:Type vm:CountryViewModel}" >
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Width="20"
-                                   Text="{Binding RelativeSource={RelativeSource FindAncestor,
-                                         AncestorType={x:Type ListView}},
-                                         Converter={StaticResource IndexConverter}}" />
-
-                        <ComboBox Grid.Column="1"
-                                  Width="140"
-                                  ItemsSource="{Binding Countries, Mode=OneTime}" >
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name, Mode=OneTime}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-
-                        <ComboBox Grid.Column="2"
-                                  Margin="10,0,0,0"
-                                  Width="40"
-                                  ItemsSource="{Binding Countries, Mode=OneTime}" >
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Alias, Mode=OneTime}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-
-                    </Grid>
-                </DataTemplate>
             </ListView.Resources>
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="No"
+                                    Width="30" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                                          AncestorType={x:Type ListViewItem}}, 
+                                                          Converter={StaticResource IndexConverter}}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Country" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox Width="140"
+                                          ItemsSource="{Binding CountryCandidates, Mode=OneTime}" >
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name, Mode=OneTime}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Alias" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox Width="50"
+                                          ItemsSource="{Binding CountryCandidates, Mode=OneTime}" >
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Alias, Mode=OneTime}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+
         </ListView>
 
     </Grid>
