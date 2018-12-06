@@ -6,7 +6,7 @@
         xmlns:vm="clr-namespace:AddableList.ViewModels"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title, Mode=OneTime}"
-        Height="200" Width="300">
+        Height="300" Width="300">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -35,13 +35,13 @@
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="No"
-                                    Width="30" >
+                    <GridViewColumn Header="No" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, 
-                                                          AncestorType={x:Type ListViewItem}}, 
-                                                          Converter={StaticResource IndexConverter}}" />
+                                <TextBlock Width="30"
+                                           Text="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                                                                         AncestorType={x:Type ListViewItem}}, 
+                                                                                         Converter={StaticResource IndexConverter}}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -49,10 +49,11 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <ComboBox Width="140"
-                                          ItemsSource="{Binding CountryCandidates, Mode=OneTime}" >
+                                          ItemsSource="{Binding CountryCandidates, Mode=OneTime}"
+                                          SelectedItem="{Binding SelectedCountry, Mode=TwoWay}" >
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Name, Mode=OneTime}" />
+                                            <TextBlock Text="{Binding Name, Mode=OneWay}" />
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
@@ -63,10 +64,11 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <ComboBox Width="50"
-                                          ItemsSource="{Binding CountryCandidates, Mode=OneTime}" >
+                                          ItemsSource="{Binding CountryCandidates, Mode=OneTime}"
+                                          SelectedItem="{Binding SelectedCountry, Mode=TwoWay}" >
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Alias, Mode=OneTime}" />
+                                            <TextBlock Text="{Binding Alias, Mode=OneWay}" />
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>

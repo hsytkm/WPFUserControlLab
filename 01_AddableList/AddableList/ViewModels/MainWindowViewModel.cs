@@ -1,5 +1,4 @@
-﻿using AddableList.Models;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
 using Reactive.Bindings;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,12 +9,7 @@ namespace AddableList.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        private string _title = "AddableList";
-        public string Title
-        {
-            get { return _title; }
-            //set { SetProperty(ref _title, value); }
-        }
+        public string Title { get; } = "AddableList";
 
         private ObservableCollection<CountryViewModel> CountriesSource { get; } = new ObservableCollection<CountryViewModel>();
         public ReadOnlyReactiveCollection<CountryViewModel> Countries { get; }
