@@ -6,7 +6,7 @@
         xmlns:vm="clr-namespace:AddableList.ViewModels"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title, Mode=OneTime}"
-        Height="300" Width="300">
+        Height="300" Width="400" >
 
     <Grid>
         <Grid.RowDefinitions>
@@ -75,7 +75,7 @@
                             <DataTemplate>
                                 <ComboBox Width="140"
                                           ItemsSource="{Binding CountryCandidates, Mode=OneTime}"
-                                          SelectedItem="{Binding SelectedCountry, Mode=TwoWay}" >
+                                          SelectedItem="{Binding SelectedCountry.Value, Mode=TwoWay}" >
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Name, Mode=OneWay}" />
@@ -90,10 +90,25 @@
                             <DataTemplate>
                                 <ComboBox Width="50"
                                           ItemsSource="{Binding CountryCandidates, Mode=OneTime}"
-                                          SelectedItem="{Binding SelectedCountry, Mode=TwoWay}" >
+                                          SelectedItem="{Binding SelectedCountry.Value, Mode=TwoWay}" >
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Alias, Mode=OneWay}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="City" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox Width="100"
+                                          ItemsSource="{Binding CityCandidates, Mode=OneWay}"
+                                          SelectedItem="{Binding SelectedCityType.Value, Mode=TwoWay}" >
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" />
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>

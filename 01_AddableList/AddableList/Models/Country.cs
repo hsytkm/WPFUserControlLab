@@ -12,7 +12,7 @@ namespace AddableList.Models
             Japan, America, England, China, India
         };
 
-        // Type/Alias
+        // Type, Alias
         public static IReadOnlyDictionary<Type, string> AliasMap = new ReadOnlyDictionary<Type, string>(
             new Dictionary<Type, string>()
             {
@@ -22,10 +22,13 @@ namespace AddableList.Models
                 [Type.China] = "中",
                 [Type.India] = "印",
             });
-        
+
         public Type Typ { get; }
         public string Name { get => Typ.ToString(); }
         public string Alias { get => GetAlias(Typ); }
+
+        // TwoWay
+        public City.Type CityType { get; set; }
 
         public Country(Type type)
         {
@@ -37,5 +40,6 @@ namespace AddableList.Models
             if (AliasMap.TryGetValue(key, out string value)) return value;
             else return "？";
         }
+
     }
 }
