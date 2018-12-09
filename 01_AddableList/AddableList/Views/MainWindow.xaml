@@ -28,11 +28,36 @@
 
         <ListView Grid.Row="1"
                   ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                  AlternationCount="2"
                   ItemsSource="{Binding Countries, Mode=OneTime}" >
             <ListView.Resources>
                 <vc:IndexConverter x:Key="IndexConverter"/>
-            </ListView.Resources>
 
+                <!-- ListViewカラムを交互に背景色変え -->
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <Grid Name="background">
+                                    <ContentControl>
+                                        <GridViewRowPresenter/>
+                                    </ContentControl>
+                                </Grid>
+
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="ItemsControl.AlternationIndex"
+                                             Value="1">
+                                        <Setter TargetName="background"
+                                                Property="Background"
+                                                Value="LightGray" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.Resources>
+            
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="No" >
