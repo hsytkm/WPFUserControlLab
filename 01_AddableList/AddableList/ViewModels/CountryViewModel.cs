@@ -1,5 +1,6 @@
 ﻿using AddableList.Models;
 using Prism.Mvvm;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
@@ -19,7 +20,8 @@ namespace AddableList.ViewModels
 
         public CountryViewModel()
         {
-            CountryCandidates = new ObservableCollection<Country>(Country.AliasMap.Select(x => new Country(x.Key)));
+            CountryCandidates = new ObservableCollection<Country>(
+                Enum.GetValues(typeof(Country.Type)).Cast<Country.Type>().Select(x => new Country(x)));
         }
     }
 }
