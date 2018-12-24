@@ -13,6 +13,21 @@ namespace TransitionPanel.Views
     /// </summary>
     public partial class TransitionControl : UserControl
     {
+        /// <summary>
+        /// 時刻ゼロ
+        /// </summary>
+        private static readonly TimeSpan TimeZero = TimeSpan.FromMilliseconds(0);
+
+        /// <summary>
+        /// アニメーション時間
+        /// </summary>
+        private static readonly TimeSpan AnimationTime = TimeSpan.FromMilliseconds(500);
+
+        /// <summary>
+        /// 水平方向の遷移量
+        /// </summary>
+        private double HorizontalOffset { get => this.ActualWidth + 10; }
+
         public TransitionControl()
         {
             InitializeComponent();
@@ -24,8 +39,7 @@ namespace TransitionPanel.Views
         /// </summary>
         public enum TransitDirections
         {
-            ToLeft,
-            ToRight,
+            ToLeft, ToRight
         }
 
         /// <summary>
@@ -33,8 +47,7 @@ namespace TransitionPanel.Views
         /// </summary>
         public enum TransitionStates
         {
-            DisplayA,
-            DisplayB,
+            DisplayA, DisplayB
         }
 
         #region Content 依存関係プロパティ
@@ -275,7 +288,7 @@ namespace TransitionPanel.Views
             {
                 Children = new TimelineCollection()
                 {
-                    CreateMoveAnimation(TimeZero,TimeZero, this.HorizontalOffset, nameof(OffsetXB)),
+                    CreateMoveAnimation(TimeZero, TimeZero, this.HorizontalOffset, nameof(OffsetXB)),
                 }
             };
             storyboard.Begin();
@@ -323,63 +336,38 @@ namespace TransitionPanel.Views
         {
             var storyboard =
                 this.State == TransitionStates.DisplayA ?
-                CreateAnimationBtoA(this.TransitDirection) :
-                CreateAnimationAtoB(this.TransitDirection);
+                CreateAnimation1to2(this.TransitDirection, nameof(OffsetXB), nameof(OffsetXA)) :
+                CreateAnimation1to2(this.TransitDirection, nameof(OffsetXA), nameof(OffsetXB));
             storyboard.Begin();
         }
 
         /// <summary>
-        /// ContentB から ContentA へ遷移するためのストーリーボードを生成します。
+        /// Content1 から Content2 へ遷移するためのストーリーボードを生成します。
         /// </summary>
         /// <param name="direction">遷移する方向を指定します。</param>
         /// <returns>生成したストーリーボードを返します。</returns>
-        private Storyboard CreateAnimationBtoA(TransitDirections direction)
+        private Storyboard CreateAnimation1to2(TransitDirections direction, string offsetX1, string offsetX2)
         {
+            var horizontalOffset = this.HorizontalOffset;
             var storyboard = new Storyboard
             {
                 Children = direction == TransitDirections.ToLeft ?
                 new TimelineCollection()
                 {
-                    CreateMoveAnimation(TimeZero, TimeZero, this.HorizontalOffset, nameof(OffsetXA)),
-                    CreateMoveAnimation(TimeZero, AnimationTime, 0, nameof(OffsetXA)),
-                    CreateMoveAnimation(TimeZero, AnimationTime, -this.HorizontalOffset, nameof(OffsetXB)),
+                    CreateMoveAnimation(TimeZero, TimeZero, horizontalOffset, offsetX2),
+                    CreateMoveAnimation(TimeZero, AnimationTime, 0, offsetX2),
+                    CreateMoveAnimation(TimeZero, AnimationTime, -horizontalOffset, offsetX1),
                 } :
                 new TimelineCollection()
                 {
-                    CreateMoveAnimation(TimeZero, TimeZero, -this.HorizontalOffset, nameof(OffsetXA)),
-                    CreateMoveAnimation(TimeZero, AnimationTime, 0, nameof(OffsetXA)),
-                    CreateMoveAnimation(TimeZero, AnimationTime, this.HorizontalOffset, nameof(OffsetXB)),
+                    CreateMoveAnimation(TimeZero, TimeZero, -horizontalOffset, offsetX2),
+                    CreateMoveAnimation(TimeZero, AnimationTime, 0, offsetX2),
+                    CreateMoveAnimation(TimeZero, AnimationTime, horizontalOffset, offsetX1),
                 }
             };
             return storyboard;
         }
-
-        /// <summary>
-        /// ContentA から ContentB へ遷移するためのストーリーボードを生成します。
-        /// </summary>
-        /// <param name="direction">遷移する方向を指定します。</param>
-        /// <returns>生成したストーリーボードを返します。</returns>
-        private Storyboard CreateAnimationAtoB(TransitDirections direction)
-        {
-            var storyboard = new Storyboard
-            {
-                Children = direction == TransitDirections.ToLeft ?
-                new TimelineCollection()
-                {
-                    CreateMoveAnimation(TimeZero, TimeZero, this.HorizontalOffset, nameof(OffsetXB)),
-                    CreateMoveAnimation(TimeZero, AnimationTime, 0, nameof(OffsetXB)),
-                    CreateMoveAnimation(TimeZero, AnimationTime, -this.HorizontalOffset, nameof(OffsetXA)),
-                } :
-                new TimelineCollection()
-                {
-                    CreateMoveAnimation(TimeZero, TimeZero, -this.HorizontalOffset, nameof(OffsetXB)),
-                    CreateMoveAnimation(TimeZero, AnimationTime, 0, nameof(OffsetXB)),
-                    CreateMoveAnimation(TimeZero, AnimationTime, this.HorizontalOffset, nameof(OffsetXA)),
-                }
-            };
-            return storyboard;
-        }
-
+        
         /// <summary>
         /// Double 型のプロパティに対するアニメーションを生成します。
         /// </summary>
@@ -406,23 +394,5 @@ namespace TransitionPanel.Views
 
         #endregion ヘルパ
 
-        #region private フィールド
-
-        /// <summary>
-        /// 時刻ゼロ
-        /// </summary>
-        private static readonly TimeSpan TimeZero = TimeSpan.FromMilliseconds(0);
-
-        /// <summary>
-        /// アニメーション時間
-        /// </summary>
-        private static readonly TimeSpan AnimationTime = TimeSpan.FromMilliseconds(500);
-
-        /// <summary>
-        /// 水平方向の遷移量
-        /// </summary>
-        private double HorizontalOffset { get => this.ActualWidth + 10; }
-
-        #endregion private フィールド
     }
 }

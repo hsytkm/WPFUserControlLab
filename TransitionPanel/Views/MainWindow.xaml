@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:TransitionPanel.ViewModels"
         mc:Ignorable="d"
         Title="TransitionPanel"
-        Height="200" Width="300">
+        Height="100" Width="200">
 
     <Window.DataContext>
         <vm:MainWindowViewModel />
@@ -19,32 +19,33 @@
                   SelectedIndex="0"
                   ItemsSource="{Binding Titles, Mode=OneTime}" />
 
-        <TabControl SelectedIndex="{Binding SelectedIndex, ElementName=combobox}">
+        <TabControl SelectedIndex="{Binding SelectedIndex, Mode=OneWay,
+                                            ElementName=combobox}">
             <TabControl.Template>
                 <ControlTemplate TargetType="{x:Type TabControl}">
-                    <v:TransitionControl Content="{Binding SelectedContent, RelativeSource={RelativeSource TemplatedParent}}" />
+                    <v:TransitionControl Content="{Binding SelectedContent, Mode=OneWay,
+                                                           RelativeSource={RelativeSource TemplatedParent}}" />
                 </ControlTemplate>
             </TabControl.Template>
 
             <TabItem>
-                <Grid DataContext="{Binding Content01ViewModel}">
-                    <CheckBox Content="{Binding Caption}" />
+                <Grid DataContext="{Binding Content01ViewModel, Mode=OneWay}" >
+                    <CheckBox Content="{Binding Caption, Mode=OneWay}" />
                 </Grid>
             </TabItem>
 
             <TabItem>
-                <Grid DataContext="{Binding Content02ViewModel}">
-                    <TextBlock Text="{Binding Caption}" />
+                <Grid DataContext="{Binding Content02ViewModel, Mode=OneWay}" >
+                    <TextBlock Text="{Binding Caption, Mode=OneWay}" />
                 </Grid>
             </TabItem>
 
             <TabItem>
-                <Grid DataContext="{Binding Content03ViewModel}">
-                    <TextBlock Text="{Binding Caption}" />
+                <Grid DataContext="{Binding Content03ViewModel, Mode=OneWay}" >
+                    <TextBlock Text="{Binding Caption, Mode=OneWay}" />
                 </Grid>
             </TabItem>
         </TabControl>
-
     </DockPanel>
 
 </Window>
